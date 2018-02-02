@@ -11,44 +11,47 @@
     public $andarAtual;
     public $andarEscolhido;
 
-    function __construct($Peso, $mPassageiros,$Pernas,$Andares,$atual = 0,$Passageiros = 0,$Escolhido = -1){
-      $this->maxPeso = $Peso;
-      $this->maxPassageiros = $mPassageiros;
-      $this->maxPernas = $Pernas;
-      $this->maxAndares = $Andares;
-      $this->andarAtual = $atual;
-      $this->numeroDePassageiros = $Passageiros;
-      $this->andarEscolhido = $Escolhido;
+    function __construct($maxPeso, $maxPassageiros,$maxPernas,$maxAndares,$andarAtual = 0,$numeroDePassageiros = 0,$andarEscolhido = -1){
+      $this->maxPeso = $maxPeso;
+      $this->maxPassageiros = $maxPassageiros;
+      $this->maxPernas = $maxPernas;
+      $this->maxAndares = $maxAndares;
+      $this->andarAtual = $andarAtual;
+      $this->numeroDePassageiros = $numeroDePassageiros;
+      $this->andarEscolhido = $andarEscolhido;
     }
 
-  public  function addPassageiro ($Pessoa){
-      if ($this->numeroDePassageiros < $this->maxPassageiros && $this->numeroPernas < $this->maxPernas && $this->pesoAtual <= $this->maxPeso)  {
-         $this->pesoAtual += $Pessoa->getPeso();
+  public  function addPassageiro ($Vivo){
+      if ($this->numeroDePassageiros < $this->maxPassageiros && $this->numeroPernas + $Vivo->getPerna() < $this->maxPernas && $this->pesoAtual + $Vivo->getPeso() <= $this->maxPeso)  {
+         $this->pesoAtual += $Vivo->getPeso();
          $this->numeroDePassageiros++;
-         $this->numeroPernas += $Pessoa->getPerna();
+         $this->numeroPernas += $Vivo->getPerna();
       }
       else {
         echo "Capacidade máxima atingida!";
       }
     }
 
-  public function removePassageiro ($Pessoa){
-        $this->pesoAtual -= $Pessoa->getPeso();
+  public function removePassageiro ($Vivo){
+    if($this->numeroDePassageiros > 0){
+        $this->pesoAtual -= $Vivo->getPeso();
         $this->numeroDePassageiros--;
-        $this->numeroPernas -= $Pessoa->getPerna();
-    }
+        $this->numeroPernas -= $Vivo->getPerna();
+      }
+      else echo "Não há mais ninguem no elevador!!";
+  }
 
   public  function numeroPassageiros(){
       echo $this->numeroDePassageiros . "   ";
     }
 
   public  function escolherAndar($andarEscolhido){
-      if($andarEscolhido == $this->andarAtual){
+      $this->andarEscolhido = $andarEscolhido;
+      if($this->andarEscolhido == $this->andarAtual){
         echo "Você já está nesse andar!! ";
       }
-      else if($andarEscolhido <= $this->maxAndares && $andarEscolhido >= 0){
+      else if($this->andarEscolhido <= $this->maxAndares && $andarEscolhido >= 0){
         $this->andarAtual = $andarEscolhido;
-        $this->andarEscolhido = $andarEscolhido;
         echo $andarAtual . "  ";
     }
     else {

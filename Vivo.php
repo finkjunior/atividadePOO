@@ -9,7 +9,7 @@
     		$this->setPeso($peso);
     		$this->nome = $nome;
     	}
-    	
+
     	public function getPerna(){
     		return $this->perna;
     	}
@@ -24,7 +24,7 @@
 
     	public function setPeso(int $peso)
     	{
-    		if($pseo < 200 && $peso >0){
+    		if($peso < 200 && $peso >0){
     			$this->peso = $peso;
     		}
     		else {
